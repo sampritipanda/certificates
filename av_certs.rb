@@ -10,20 +10,14 @@ require 'digest'
 require 'sinatra/activerecord'
 require './certificate'
 
-
-@username = 'No Name'
-@bg_image = File.join(File.dirname(__FILE__), 'templates/AV102-certificate300.jpg')
-@course_name = 'AV102 ESaaS: Managing Distributed Teams'
-@course_desc = 'AV102 prepares you to be a Teaching Assistant (TA) for the Engineering Software as a Service CS169 MOOC.'
-
+DEFAULTS = { name: 'No Name', date: Date.today.to_s, course_name: 'AV102 ESaaS: Managing Distributed Teams', course_desc: 'AV102 prepares you to be a Teaching Assistant (TA) for the Engineering Software as a Service CS169 MOOC.' }
 
 def write_to_cert(options = {})
-  defaults = { name: @username, date: Date.today.to_s, course_name: @course_name, course_desc: @course_desc }
-  options = defaults.merge(options)
-  name = options.fetch(:name)
-  date = Date.parse(options.fetch(:date)) 
-  course_name = options.fetch(:course_name)
-  course_desc = options.fetch(:course_desc)
+  options = DEFAULTS.merge(options)
+  name = options[:name]
+  date = Date.parse(options.fetch(:date).to_s)
+  course_name = options[:course_name]
+  course_desc = options[:course_desc]
   output = "pdf/#{name}-#{date}.pdf"
   save_certificate(name, date, course_name, course_desc)
   File.delete(output) if File.exist?(output)

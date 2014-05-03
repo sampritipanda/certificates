@@ -1,16 +1,13 @@
 require_relative '../av_certs.rb' 
 require 'spec_helper.rb' 
 
-describe 'write_to_cert' do	
-  before(:each) do
-    write_to_cert(name: 'Thomas', date: Date.today.to_s, course_name: 'Test Course', course_desc: 'Test Description' ) 
-  end
+describe 'write_to_cert' do
 	it "should assign a standard @username to :name" do
-    expect(write_to_cert(:name)).to be_include("Thomas")  
+    expect(write_to_cert).to be_include("No Name")
 	end
   
 	it "should assign a date to :date" do
-    expect(write_to_cert(:date)).to be_include(Date.today.to_s) 
+    expect(write_to_cert).to be_include(Date.today.to_s)
 	end
 end
 
